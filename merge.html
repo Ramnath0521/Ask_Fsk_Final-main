@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Stream</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <!-- <base href="/"> -->
+    <style>
+      * {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: "Oswald", sans-serif;
+  min-height: 100%;
+  /* background: linear-gradient(to bottom, #777, #444); */
+  background-repeat: no-repeat;
+  background-position: fixed;
+  background-size: cover;
+  line-height: 1.4;
+  color: #111;
+  overflow-x: hidden;
+}
+@media all and (max-width: 600px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+body {
+  height: 100%;
+  min-height: 100%;
+}
+
+form {
+  max-width: 30em;
+  margin: 4rem auto;
+  text-align: center;
+}
+
+fieldset {
+  position: relative;
+  border: none;
+  width: 16rem;
+  height: 16rem;
+  margin: 0 auto;
+}
+fieldset legend {
+  position: absolute;
+  top: -4rem;
+  left: 0;
+  width: 100%;
+}
+fieldset label {
+  position: absolute;
+  display: block;
+  margin: 0 auto;
+  padding-top: 1rem;
+  width: 1rem;
+  left: 7.5rem;
+  transform-origin: 50% 7.5rem;
+}
+fieldset label:hover {
+  cursor: pointer;
+}
+fieldset input {
+  position: absolute;
+  width: 7rem;
+  left: 7rem;
+  display: block;
+  margin: 1rem auto 0 auto;
+  padding: 0;
+  transform-origin: 50% 7.5rem;
+  opacity: 0;
+}
+fieldset input:hover {
+  cursor: pointer;
+}
+fieldset #radio-choice-0, fieldset label[for=radio-choice-0] {
+  transform: rotateZ(0deg);
+}
+fieldset #radio-choice-1, fieldset label[for=radio-choice-1] {
+  transform: rotateZ(30deg);
+}
+fieldset #radio-choice-2, fieldset label[for=radio-choice-2] {
+  transform: rotateZ(60deg);
+}
+fieldset #radio-choice-3, fieldset label[for=radio-choice-3] {
+  transform: rotateZ(90deg);
+}
+fieldset #radio-choice-4, fieldset label[for=radio-choice-4] {
+  transform: rotateZ(120deg);
+}
+fieldset #radio-choice-5, fieldset label[for=radio-choice-5] {
+  transform: rotateZ(150deg);
+}
+fieldset #radio-choice-6, fieldset label[for=radio-choice-6] {
+  transform: rotateZ(180deg);
+}
+fieldset #radio-choice-7, fieldset label[for=radio-choice-7] {
+  transform: rotateZ(210deg);
+}
+fieldset #radio-choice-8, fieldset label[for=radio-choice-8] {
+  transform: rotateZ(240deg);
+}
+fieldset #radio-choice-9, fieldset label[for=radio-choice-9] {
+  transform: rotateZ(270deg);
+}
+fieldset #radio-choice-10, fieldset label[for=radio-choice-10] {
+  transform: rotateZ(300deg);
+}
+fieldset input[type=radio]:checked + label {
+  color: #2f5;
+  text-shadow: 0px 0px 4px #2f5;
+}
+
+input[type=radio]:checked#radio-choice-1 ~ .dial {
+  transform: rotateZ(30deg);
+}
+input[type=radio]:checked#radio-choice-1 ~ .dial::before {
+  transform: rotateZ(30deg);
+}
+input[type=radio]:checked#radio-choice-1 ~ .dial::after {
+  transform: rotateZ(30deg);
+}
+input[type=radio]:checked#radio-choice-2 ~ .dial {
+  transform: rotateZ(60deg);
+}
+input[type=radio]:checked#radio-choice-2 ~ .dial::before {
+  transform: rotateZ(60deg);
+}
+input[type=radio]:checked#radio-choice-2 ~ .dial::after {
+  transform: rotateZ(60deg);
+}
+input[type=radio]:checked#radio-choice-3 ~ .dial {
+  transform: rotateZ(90deg);
+}
+input[type=radio]:checked#radio-choice-3 ~ .dial::before {
+  transform: rotateZ(90);
+}
+input[type=radio]:checked#radio-choice-3 ~ .dial::after {
+  transform: rotateZ(90);
+}
+input[type=radio]:checked#radio-choice-4 ~ .dial {
+  transform: rotateZ(120deg);
+}
+input[type=radio]:checked#radio-choice-4 ~ .dial::before {
+  transform: rotateZ(120);
+}
+input[type=radio]:checked#radio-choice-4 ~ .dial::after {
+  transform: rotateZ(120);
+}
+input[type=radio]:checked#radio-choice-5 ~ .dial {
+  transform: rotateZ(150deg);
+}
+input[type=radio]:checked#radio-choice-5 ~ .dial::before {
+  transform: rotateZ(150);
+}
+input[type=radio]:checked#radio-choice-5 ~ .dial::after {
+  transform: rotateZ(150);
+}
+input[type=radio]:checked#radio-choice-6 ~ .dial {
+  transform: rotateZ(180deg);
+}
+input[type=radio]:checked#radio-choice-6 ~ .dial::before {
+  transform: rotateZ(180deg);
+}
+input[type=radio]:checked#radio-choice-6 ~ .dial::after {
+  transform: rotateZ(180deg);
+}
+input[type=radio]:checked#radio-choice-7 ~ .dial {
+  transform: rotateZ(210deg);
+}
+input[type=radio]:checked#radio-choice-7 ~ .dial::before {
+  transform: rotateZ(210deg);
+}
+input[type=radio]:checked#radio-choice-7 ~ .dial::after {
+  transform: rotateZ(210deg);
+}
+input[type=radio]:checked#radio-choice-8 ~ .dial {
+  transform: rotateZ(240deg);
+}
+input[type=radio]:checked#radio-choice-8 ~ .dial::before {
+  transform: rotateZ(240deg);
+}
+input[type=radio]:checked#radio-choice-8 ~ .dial::after {
+  transform: rotateZ(240deg);
+}
+input[type=radio]:checked#radio-choice-9 ~ .dial {
+  transform: rotateZ(270deg);
+}
+input[type=radio]:checked#radio-choice-9 ~ .dial::before {
+  transform: rotateZ(270deg);
+}
+input[type=radio]:checked#radio-choice-9 ~ .dial::after {
+  transform: rotateZ(270deg);
+}
+input[type=radio]:checked#radio-choice-10 ~ .dial {
+  transform: rotateZ(300deg);
+}
+input[type=radio]:checked#radio-choice-10 ~ .dial::before {
+  transform: rotateZ(300deg);
+}
+input[type=radio]:checked#radio-choice-10 ~ .dial::after {
+  transform: rotateZ(300deg);
+}
+
+/* Frequency */
+fieldset #freq-choice-0, fieldset label[for=freq-choice-0] {
+  transform: rotateZ(0deg);
+}
+fieldset #freq-choice-1, fieldset label[for=freq-choice-1] {
+  transform: rotateZ(30deg);
+}
+fieldset #freq-choice-2, fieldset label[for=freq-choice-2] {
+  transform: rotateZ(60deg);
+}
+fieldset #freq-choice-3, fieldset label[for=freq-choice-3] {
+  transform: rotateZ(90deg);
+}
+fieldset #freq-choice-4, fieldset label[for=freq-choice-4] {
+  transform: rotateZ(120deg);
+}
+fieldset #freq-choice-5, fieldset label[for=freq-choice-5] {
+  transform: rotateZ(150deg);
+}
+fieldset #freq-choice-6, fieldset label[for=freq-choice-6] {
+  transform: rotateZ(180deg);
+}
+fieldset #freq-choice-7, fieldset label[for=freq-choice-7] {
+  transform: rotateZ(210deg);
+}
+fieldset #freq-choice-8, fieldset label[for=freq-choice-8] {
+  transform: rotateZ(240deg);
+}
+fieldset #freq-choice-9, fieldset label[for=freq-choice-9] {
+  transform: rotateZ(270deg);
+}
+fieldset #freq-choice-10, fieldset label[for=freq-choice-10] {
+  transform: rotateZ(300deg);
+}
+input[type=radio]:checked#freq-choice-1 ~ .dial {
+  transform: rotateZ(30deg);
+}
+input[type=radio]:checked#freq-choice-1 ~ .dial::before {
+  transform: rotateZ(30deg);
+}
+input[type=radio]:checked#freq-choice-1 ~ .dial::after {
+  transform: rotateZ(30deg);
+}
+input[type=radio]:checked#freq-choice-2 ~ .dial {
+  transform: rotateZ(60deg);
+}
+input[type=radio]:checked#freq-choice-2 ~ .dial::before {
+  transform: rotateZ(60deg);
+}
+input[type=radio]:checked#freq-choice-2 ~ .dial::after {
+  transform: rotateZ(60deg);
+}
+input[type=radio]:checked#freq-choice-3 ~ .dial {
+  transform: rotateZ(90deg);
+}
+input[type=radio]:checked#freq-choice-3 ~ .dial::before {
+  transform: rotateZ(90);
+}
+input[type=radio]:checked#freq-choice-3 ~ .dial::after {
+  transform: rotateZ(90);
+}
+input[type=radio]:checked#freq-choice-4 ~ .dial {
+  transform: rotateZ(120deg);
+}
+input[type=radio]:checked#freq-choice-4 ~ .dial::before {
+  transform: rotateZ(120);
+}
+input[type=radio]:checked#freq-choice-4 ~ .dial::after {
+  transform: rotateZ(120);
+}
+input[type=radio]:checked#freq-choice-5 ~ .dial {
+  transform: rotateZ(150deg);
+}
+input[type=radio]:checked#freq-choice-5 ~ .dial::before {
+  transform: rotateZ(150);
+}
+input[type=radio]:checked#freq-choice-5 ~ .dial::after {
+  transform: rotateZ(150);
+}
+input[type=radio]:checked#freq-choice-6 ~ .dial {
+  transform: rotateZ(180deg);
+}
+input[type=radio]:checked#freq-choice-6 ~ .dial::before {
+  transform: rotateZ(180deg);
+}
+input[type=radio]:checked#freq-choice-6 ~ .dial::after {
+  transform: rotateZ(180deg);
+}
+input[type=radio]:checked#freq-choice-7 ~ .dial {
+  transform: rotateZ(210deg);
+}
+input[type=radio]:checked#freq-choice-7 ~ .dial::before {
+  transform: rotateZ(210deg);
+}
+input[type=radio]:checked#freq-choice-7 ~ .dial::after {
+  transform: rotateZ(210deg);
+}
+input[type=radio]:checked#freq-choice-8 ~ .dial {
+  transform: rotateZ(240deg);
+}
+input[type=radio]:checked#freq-choice-8 ~ .dial::before {
+  transform: rotateZ(240deg);
+}
+input[type=radio]:checked#freq-choice-8 ~ .dial::after {
+  transform: rotateZ(240deg);
+}
+input[type=radio]:checked#freq-choice-9 ~ .dial {
+  transform: rotateZ(270deg);
+}
+input[type=radio]:checked#freq-choice-9 ~ .dial::before {
+  transform: rotateZ(270deg);
+}
+input[type=radio]:checked#freq-choice-9 ~ .dial::after {
+  transform: rotateZ(270deg);
+}
+input[type=radio]:checked#freq-choice-10 ~ .dial {
+  transform: rotateZ(300deg);
+}
+input[type=radio]:checked#freq-choice-10 ~ .dial::before {
+  transform: rotateZ(300deg);
+}
+input[type=radio]:checked#freq-choice-10 ~ .dial::after {
+  transform: rotateZ(300deg);
+}
+
+.dial {
+  position: relative;
+  text-align: center;
+  line-height: 0;
+  font-size: 65%;
+  color: #082;
+  text-shadow: 0px 0px 7px #2f5;
+  display: block;
+  width: 8rem;
+  height: 8rem;
+  padding: 1rem;
+  background: radial-gradient(#272727 30%, #333 50%, #222 65%, #111 90%, black 98%);
+  margin: 3rem auto;
+  border-radius: 50%;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.6);
+  transition: transform 0.3s ease-in-out;
+}
+.dial::before {
+  position: absolute;
+  content: "";
+  display: block;
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 80%, rgba(15, 15, 15, 0.4) 40%, rgba(15, 15, 15, 0.1) 70%);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.45);
+  transition: transform 0.3s ease-in-out;
+}
+.dial::after {
+  position: absolute;
+  content: "";
+  display: block;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  top: 0;
+  left: 0;
+  background: radial-gradient(circle at 50% 25%, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+  transition: transform 0.3s ease-in-out;
+}
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+
+.clearfix {
+  display: inline-block;
+}
+
+/* start commented backslash hack \*/
+* html .clearfix {
+  height: 1%;
+}
+
+.clearfix {
+  display: block;
+}
+
+/* close commented backslash hack */
+  </style>
+</head>
+
+<body>
+    <h1>ASK Modulation and Demodulation</h1>
+     <div class="Switch">
+      <div class="switchRed shadow" onclick="onOff()">
+            <p><br> POWER ON/OFF</p>
+      </div>
+      <div class="led "><img id="leds" src="images/redLed.png"></div>
+    </div>
+   
+    <!-- User Input -->
+    <div class="module-border-wrap">
+    <div class="userInput">
+      
+    <img src="zero.jpeg" class="image" id="s0" onclick="swapOneZero0()">
+    <img src="zero.jpeg" class="image" id="s1" onclick="swapOneZero1()">
+    <img src="zero.jpeg" class="image" id="s2" onclick="swapOneZero2()">
+    <img src="zero.jpeg" class="image" id="s3" onclick="swapOneZero3()">
+    <img src="zero.jpeg" class="image" id="s4" onclick="swapOneZero4()">
+    <img src="zero.jpeg" class="image" id="s5" onclick="swapOneZero5()">
+    <img src="zero.jpeg" class="image" id="s6" onclick="swapOneZero6()">
+    <img src="zero.jpeg" class="image" id="s7" onclick="swapOneZero7()">
+    <button class="runButton" onclick="printArray()">RUN </button>
+    </div>
+    </div>
+</div>
+
+<!-- Instructions -->
+<div class="wrapper">
+    <div class="topContainer">Instructions</div>
+    <div class="midContainer">
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    
+
+
+<!-- Graphs -->
+<div class="graphs">
+<canvas id="canvasStep" height="300px" style="border:1px solid" ></canvas>
+<canvas id="canvasCarrier" height="300px" style="border:1px solid"></canvas>
+<canvas id="canvasASK" height="300px" style="border:1px solid"></canvas>
+<canvas id="canvasFSK" height="300px" style="border:1px solid"></canvas>
+</div>
+</div>
+
+</div>
+<!-- <script src="merge.js"></script> -->
+
+<!-- Dial for Amplitude-->
+<div class="container">
+  <form action="#">
+    <div>
+
+      <fieldset>
+        <legend>
+          <h1>Amplitude</h1>
+        </legend>
+
+        <input type="radio" name="radio-choice" id="radio-choice-0" value=0 />
+        <label for="radio-choice-0">0</label>
+
+        <input type="radio" name="radio-choice" id="radio-choice-1" value=1 />
+        <label for="radio-choice-1">1</label>
+
+        <input type="radio" name="radio-choice" id="radio-choice-2" value=2 />
+        <label for="radio-choice-2">2</label>
+
+        <input type="radio" name="radio-choice" id="radio-choice-3" value=3 />
+        <label for="radio-choice-3">3</label>
+
+        <input type="radio" name="radio-choice" id="radio-choice-4" value=4 />
+        <label for="radio-choice-4">4</label>
+
+        <input type="radio" name="radio-choice" id="radio-choice-5" value=5 />
+        <label for="radio-choice-5">5</label>
+
+        <input type="radio" name="radio-choice" id="radio-choice-6" value=6 />
+        <label for="radio-choice-6">6</label>
+
+        <input type="radio" name="radio-choice" id="radio-choice-7" value=7 />
+        <label for="radio-choice-7">7</label>
+
+        <input type="radio" name="radio-choice" id="radio-choice-8" value=8 />
+        <label for="radio-choice-8">8</label>
+
+        <input type="radio" name="radio-choice" id="radio-choice-9" value=9 />
+        <label for="radio-choice-9">9</label>
+
+        <input type="radio" name="radio-choice" id="radio-choice-10" value=10 />
+        <label for="radio-choice-10">10</label>
+
+        <div class="dial">▲</div>
+
+      </fieldset>
+
+  </form>
+
+
+</div>
+
+<!-- Dial for Frequency-->
+<div class="container">
+  <form action="#">
+    <div>
+
+      <fieldset>
+        <legend>
+          <h1>Frequency</h1>
+        </legend>
+
+        <input type="radio" name="radio-choice" id="freq-choice-0" value=0 />
+        <label for="freq-choice-0">0</label>
+
+        <input type="radio" name="freq-choice" id="freq-choice-1" value=1 />
+        <label for="freq-choice-1">1</label>
+
+        <input type="radio" name="freq-choice" id="freq-choice-2" value=2 />
+        <label for="freq-choice-2">2</label>
+
+        <input type="radio" name="freq-choice" id="freq-choice-3" value=3 />
+        <label for="freq-choice-3">3</label>
+
+        <input type="radio" name="freq-choice" id="freq-choice-4" value=4 />
+        <label for="freq-choice-4">4</label>
+
+        <input type="radio" name="freq-choice" id="freq-choice-5" value=5 />
+        <label for="freq-choice-5">5</label>
+
+        <input type="radio" name="freq-choice" id="freq-choice-6" value=6 />
+        <label for="freq-choice-6">6</label>
+
+        <input type="radio" name="freq-choice" id="freq-choice-7" value=7 />
+        <label for="freq-choice-7">7</label>
+
+        <input type="radio" name="freq-choice" id="freq-choice-8" value=8 />
+        <label for="freq-choice-8">8</label>
+
+        <input type="radio" name="freq-choice" id="freq-choice-9" value=9 />
+        <label for="freq-choice-9">9</label>
+
+        <input type="radio" name="freq-choice" id="freq-choice-10" value=10 />
+        <label for="freq-choice-10">10</label>
+
+        <div class="dial">▲</div>
+
+      </fieldset>
+
+  </form>
+
+
+</div>
+
+<script src="merge.js"></script>
+</body>
+</html>
